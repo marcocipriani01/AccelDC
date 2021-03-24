@@ -16,11 +16,11 @@ void AccelDC::begin() {
     pinMode(in2, OUTPUT);
     analogWrite(in2, 0);
     pinMode(en, OUTPUT);
-    digitalWrite(en, HIGH);
+    digitalWrite(en, LOW);
 }
 
 void AccelDC::setEnabled(bool enabled) {
-    digitalWrite(en, !enabled);
+    digitalWrite(en, enabled);
 }
 
 int AccelDC::write(float mps) {
