@@ -17,6 +17,7 @@ public:
     void setTargetSpeed(float speed);
     void moveForMillis(unsigned long t);
     void setBackwards(bool backwards);
+    void brake();
     bool run();
 private:
     int write(float mps);

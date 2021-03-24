@@ -53,10 +53,18 @@ void AccelDC::moveForMillis(unsigned long t) {
     moveForMillisCurrent = 0;
 }
 
+void AccelDC::brake() {
+    if (moveForMillisVal != 0) {
+        moveForMillisVal = moveForMillisCurrent + ((currentSpd - minSpd) / accel);
+    }
+}
+
 bool AccelDC::run() {
     unsigned long time = millis();
     unsigned long dt = time - lastRunTime;
-    if (dt < TIME_RESOLUTION_MS) return;
+    if (dt < TIME_RESOLUTION_MS) {
+        return (moveForMillisVal != 0);
+    }
     lastRunTime = time;
 
     // Time-based acceleration curve
@@ -75,4 +83,5 @@ bool AccelDC::run() {
         moveForMillisCurrent += dt;
         return true;
     }
+    return false;
 }
