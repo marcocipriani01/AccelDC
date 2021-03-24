@@ -5,7 +5,8 @@
 
 #define TIME_RESOLUTION_MS 10
 // mps : 5m/s = pwm : 255
-#define MPS_TO_PWM(x) ((int) (x/51))
+// ((int) (x/51))
+#define MPS_TO_PWM(x) x
 
 class AccelDC {
 public:
