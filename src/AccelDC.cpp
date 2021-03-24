@@ -32,7 +32,7 @@ int AccelDC::write(float mps) {
     currentSpd = constrain(mps, 0, targetSpd);
     if (invertDir) {
         analogWrite(in1, 0);
-        analogWrite(in2, -MPS_TO_PWM(currentSpd));
+        analogWrite(in2, MPS_TO_PWM(currentSpd));
     } else {
         analogWrite(in2, 0);
         analogWrite(in1, MPS_TO_PWM(currentSpd));
