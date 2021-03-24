@@ -12,25 +12,25 @@ AccelDC::AccelDC(uint8_t input1, uint8_t input2, uint8_t enable) {
 
 void AccelDC::begin() {
     pinMode(in1, OUTPUT);
-    analogWrite(in1, LOW);
+    analogWrite(in1, 0);
     pinMode(in2, OUTPUT);
-    analogWrite(in2, LOW);
+    analogWrite(in2, 0);
     pinMode(en, OUTPUT);
-    analogWrite(en, HIGH);
+    digitalWrite(en, HIGH);
 }
 
 void AccelDC::setEnabled(bool enabled) {
-    analogWrite(en, !enabled);
+    digitalWrite(en, !enabled);
 }
 
 int AccelDC::write(float mps) {
     currentSpd = constrain(mps, -targetSpd, targetSpd);
     int val = MPS_TO_PWM(currentSpd);
     if (val >= 0) {
-        analogWrite(in2, LOW);
+        analogWrite(in2, 0);
         analogWrite(in1, val);
     } else {
-        analogWrite(in1, LOW);
+        analogWrite(in1, 0);
         analogWrite(in2, -val);
     }
 }
