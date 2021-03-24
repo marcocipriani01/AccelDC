@@ -4,9 +4,9 @@
 #include <Arduino.h>
 
 #define TIME_RESOLUTION_MS 10
-// mps : 5m/s = pwm : 255
-// ((int) (x/51))
+#ifndef MPS_TO_PWM
 #define MPS_TO_PWM(x) x
+#endif
 
 class AccelDC {
 public:
@@ -16,9 +16,11 @@ public:
     void setConfig(float minSpeed, float acceleration);
     void setTargetSpeed(float speed);
     void moveForMillis(unsigned long t);
-    void run();
+    void setBackwards(bool backwards);
+    bool run();
 private:
     int write(float mps);
+    bool invertDir;
     uint8_t in1;
     uint8_t in2;
     uint8_t en;

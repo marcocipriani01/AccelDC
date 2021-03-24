@@ -8,6 +8,7 @@ AccelDC::AccelDC(uint8_t input1, uint8_t input2, uint8_t enable) {
     minSpd = currentSpd = targetSpd = 0;
     moveForMillisVal = 0;
     lastRunTime = 0;
+    invertDir = false;
 }
 
 void AccelDC::begin() {
@@ -19,19 +20,22 @@ void AccelDC::begin() {
     digitalWrite(en, LOW);
 }
 
+void AccelDC::setBackwards(bool backwards) {
+    invertDir = backwards;
+}
+
 void AccelDC::setEnabled(bool enabled) {
     digitalWrite(en, enabled);
 }
 
 int AccelDC::write(float mps) {
-    currentSpd = constrain(mps, -targetSpd, targetSpd);
-    int val = MPS_TO_PWM(currentSpd);
-    if (val >= 0) {
-        analogWrite(in2, 0);
-        analogWrite(in1, val);
-    } else {
+    currentSpd = constrain(mps, 0, targetSpd);
+    if (invertDir) {
         analogWrite(in1, 0);
-        analogWrite(in2, -val);
+        analogWrite(in2, -MPS_TO_PWM(currentSpd));
+    } else {
+        analogWrite(in2, 0);
+        analogWrite(in1, MPS_TO_PWM(currentSpd));
     }
 }
 
@@ -49,7 +53,7 @@ void AccelDC::moveForMillis(unsigned long t) {
     moveForMillisCurrent = 0;
 }
 
-void AccelDC::run() {
+bool AccelDC::run() {
     unsigned long time = millis();
     unsigned long dt = time - lastRunTime;
     if (dt < TIME_RESOLUTION_MS) return;
@@ -66,8 +70,9 @@ void AccelDC::run() {
         } else {
             write(0);
             moveForMillisVal = moveForMillisCurrent = 0;
-            return;
+            return false;
         }
         moveForMillisCurrent += dt;
+        return true;
     }
 }
