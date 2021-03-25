@@ -28,7 +28,7 @@ void AccelDC::setEnabled(bool enabled) {
     digitalWrite(en, enabled);
 }
 
-int AccelDC::write(float mps) {
+void AccelDC::write(float mps) {
     currentSpd = constrain(mps, 0, targetSpd);
     if (invertDir) {
         analogWrite(in1, 0);

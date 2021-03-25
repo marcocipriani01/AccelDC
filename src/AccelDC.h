@@ -11,16 +11,26 @@
 class AccelDC {
 public:
     AccelDC(uint8_t input1, uint8_t input2, uint8_t enable);
+
     void begin();
+
     void setEnabled(bool enabled);
+
     void setConfig(float minSpeed, float acceleration);
+
     void setTargetSpeed(float speed);
+
     void moveForMillis(unsigned long t);
+
     void setBackwards(bool backwards);
+
     void brake();
+
     bool run();
+
 private:
-    int write(float mps);
+    void write(float mps);
+
     bool invertDir;
     uint8_t in1;
     uint8_t in2;
