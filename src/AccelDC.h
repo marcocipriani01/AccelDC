@@ -9,7 +9,7 @@
 #endif
 
 class AccelDC {
-public:
+   public:
     AccelDC(uint8_t input1, uint8_t input2, uint8_t enable);
 
     void begin();
@@ -28,7 +28,7 @@ public:
 
     bool run();
 
-private:
+   private:
     void write(float mps);
 
     bool invertDir;

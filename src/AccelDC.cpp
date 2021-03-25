@@ -20,13 +20,9 @@ void AccelDC::begin() {
     digitalWrite(en, LOW);
 }
 
-void AccelDC::setBackwards(bool backwards) {
-    invertDir = backwards;
-}
+void AccelDC::setBackwards(bool backwards) { invertDir = backwards; }
 
-void AccelDC::setEnabled(bool enabled) {
-    digitalWrite(en, enabled);
-}
+void AccelDC::setEnabled(bool enabled) { digitalWrite(en, enabled); }
 
 void AccelDC::write(float mps) {
     currentSpd = constrain(mps, 0, targetSpd);
@@ -44,9 +40,7 @@ void AccelDC::setConfig(float minSpeed, float acceleration) {
     minSpd = minSpeed;
 }
 
-void AccelDC::setTargetSpeed(float speed) {
-    targetSpd = speed;
-}
+void AccelDC::setTargetSpeed(float speed) { targetSpd = speed; }
 
 void AccelDC::moveForMillis(unsigned long t) {
     moveForMillisVal = t;
@@ -55,7 +49,8 @@ void AccelDC::moveForMillis(unsigned long t) {
 
 void AccelDC::brake() {
     if (moveForMillisVal != 0) {
-        moveForMillisVal = moveForMillisCurrent + ((currentSpd - minSpd) / accel);
+        moveForMillisVal =
+            moveForMillisCurrent + ((currentSpd - minSpd) / accel);
     }
 }
 
