@@ -30,8 +30,8 @@ void AccelDC::write(float mps) {
         analogWrite(in1, 0);
         analogWrite(in2, MPS_TO_PWM(currentSpd));
     } else {
-        analogWrite(in2, 0);
         analogWrite(in1, MPS_TO_PWM(currentSpd));
+        analogWrite(in2, 0);
     }
 }
 
